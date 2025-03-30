@@ -1,0 +1,139 @@
+# ==== Paths and files ====
+
+# The path to the data that will be used for the plot (default: data/wandb_exports).
+runs_path: data/bench19
+
+# The name of the files that contain the scalars and the config
+file_scalars: scalars.csv
+file_config: config.yaml
+
+
+
+# ==== Data selection ====
+
+# The metric that will be used for the plot.
+metrics_expressions:
+  - name: dP(eat fruit)/d(values)
+    expression: metrics[f"eating P(eat fruit @fruit | nh=typical, value=@value, density_fruit=@rho, density_agents=medium)/eating/pop_mean"]
+    aggregators:
+      - key: value
+        values: ["positive", "negative"]
+        operation: diff
+      - key : fruit
+        values : [0, 1, 2, 3]
+        operation : mean
+      - key : rho
+        values : ["high", "low"]
+        operation : mean
+  - metrics.n_agents
+
+# The x-axis (default: _step).
+x_axis: _step
+
+# The filters that will be applied to the config for accepting a run.
+# This will be done with an 'eval' function, so you can use any python code.
+filters:
+  - config.env.variability_fruits in [[0.1, 0.1, 0.1, 0.1], [0.5, 0.5, 0.5, 0.5]]
+
+# The groupings that will be applied to the config for grouping the runs.
+# It is composed of a list of python expressions that will be evaluated.
+# The data will be grouped by the unique values of the tuple expression.
+groups:
+  - expression : metric_name
+    key_plot: linestyle
+    kwargs_plot:
+      "dP(eat fruit)/d(values)" : '-'
+      "metrics.n_agents" : '--'
+    args_plot: ['-', '--']
+  - expression : config.env.variability_fruits
+    key_plot: color
+    kwargs_plot:
+      "[0, 0, 0, 0]" : 'green'
+      "[0.1, 0.1, 0.1, 0.1]" : 'blue'
+      "[0.5, 0.5, 0.5, 0.5]" : 'orange'
+      "[1, 1, 1, 1]" : 'red'
+    args_plot: ["green", "blue", "orange", "red"]
+
+# The methods to use for aggregation (solid line), error bars (shaded area) and samples (shaded lines)
+method_aggregate: mean # among mean, median, min, max
+method_error: std # among std, sem, range, iqr, percentile_<q>, none
+n_samples_shown: 3 # the number of run sampled from each group that will be shown if shaded lines
+
+# The maximum number of runs to show in the plot
+max_n_runs: 100
+# The maximum number of curves to show in the plot
+max_n_curves: 100
+
+
+
+
+
+# ==== Plotting interface options ====
+
+# The x-limits of the plot. By default it will be the min and max of the x-axis metric. 
+x_lim: null
+y_lim: null
+# Whether to try adding y=0 to the limits if 0 is not too far away from the data (nearest than the data range).
+do_try_include_y0: True
+ratio_near_y0: 0.5 # The ratio of the data range that should be considered as "near" 0.
+
+# The x-axis label.
+x_label: "Steps"
+
+# Various plt kwargs
+kwargs_grid:
+  visible: True
+kwargs_legend:
+  loc: best
+  fontsize: small
+kwargs_title:
+  fontsize: large
+kwargs_plot: 
+  color : 'black'
+  linestyle: '-'
+# The alpha of the shaded area for shaded visuals.
+alpha_shaded: 0.1
+# The maximum legend length. If the legend is longer, it will be cut.
+max_legend_length: 20
+# Figure size
+figsize: [10, 6]
+
+
+
+# ==== Show/save options ====
+
+# Whether to show the plot.
+do_show: True
+# Whether to save the plot.
+do_save: True
+# The path where to save the plot, as a function of "metric" the metric pretty representation file-compatible (metric.x -> x) and "date" the date of the run.
+# If null, will use f'plots/plot_{metric}_{date}.png'. If not file-compatible, will be replaced by '_'.
+path_save: "f'plots/bench19/plot_{metric}.png'"
+# plt.savefig kwargs
+kwargs_savefig:
+  dpi: 300
+  bbox_inches: tight
+  pad_inches: 0.1
+  transparent: False
+  format: png 
+
+
+
+# ==== Other options ====
+
+
+
+# ==== Hydra config (do not change) ====
+
+# Defaults sub-configs and other Hydra config.
+defaults:
+  - _self_
+  - override hydra/hydra_logging: default  
+  - override hydra/job_logging: stdout 
+
+# Hydra config, do not change.
+hydra:
+  output_subdir: null
+  run:
+    dir: .
+  
