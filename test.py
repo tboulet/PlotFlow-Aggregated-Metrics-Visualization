@@ -21,7 +21,7 @@ agents:
   - fruits_2
   - fruits_3
   log_dir: logs
-  log_weights: false
+  log_weights: true
   metrics:
     aggregators_lifespan:
     - class_string: ecojax.metrics.aggregators:AggregatorLifespanCumulative
@@ -92,7 +92,7 @@ agents:
       - gradients weights
       - gradients bias
       - table_value_fruits
-  mode_weights_transmission: final
+  mode_weights_transmission: none
   n_weights_log: 30
   name: AdaptiveAgents
   reward_model:
@@ -101,7 +101,7 @@ agents:
       energy: 5.2631578947368425
       n_childrens: 3.1578947368421053
     func_weight: hardcoded
-  run_name: run_20250428_180700-bench53-region/omega_0.4/seed_10802
+  run_name: run_20250425_114433-bench53-region/omega_1/seed_24938
 benchmark_name: bench53
 do_cli: false
 do_csv: false
@@ -119,7 +119,7 @@ env:
   do_fruits: true
   do_normalize_fruits: false
   do_plant_grow_in_fruit_clusters: false
-  duration: 200000
+  duration: 100000
   e_fruit_0_abs_max: 50
   e_fruit_T_abs_max: 40
   e_fruit_abs_max_ref: 10
@@ -283,9 +283,9 @@ env:
         fruits_3: pink
         plants: green
         sun: yellow
-      dir_videos: ./logs/run_20250428_180700-bench53-region/omega_0.4/seed_10802/videos
+      dir_videos: ./logs/run_20250425_114433-bench53-region/omega_1/seed_24938/videos
       do_agent_video: false
-      do_video: false
+      do_video: true
       fps_video: 20
       height_max_video: 500
       n_steps_min_between_videos: 5000
@@ -325,7 +325,7 @@ env:
   min_density_fruits: 0.4
   mode_variability_fruits: space_diffusion
   name: Gridworld
-  omega: 0.4
+  omega: 1
   p_base_fruit_death: 0.0005
   p_base_fruit_growth: 0.0065
   p_base_plant_death: 0
@@ -340,7 +340,7 @@ env:
   radius_sun_effect: 10
   radius_sun_perception: 40
   range_cluster_fruits: 5
-  run_name: run_20250428_180700-bench53-region/omega_0.4/seed_10802
+  run_name: run_20250425_114433-bench53-region/omega_1/seed_24938
   side_cluster_fruits: 11
   sum_energy_map_ref: 275
   t_fruit_T: 50000
@@ -368,9 +368,9 @@ model:
 n_actions: 5
 n_agents_initial: 400
 n_agents_max: 1500
-n_timesteps: 200000
+n_timesteps: 100000
 period_eval: 500
-run_name: run_20250428_180700-bench53-region/omega_0.4/seed_10802
-seed: 10802
+run_name: run_20250425_114433-bench53-region/omega_1/seed_24938
+seed: 24938
 wandb_config:
   project: EcoJAX
